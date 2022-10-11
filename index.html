@@ -1,7 +1,7 @@
 <html>
   <head>
     <script>
-      window.onload(() => {
+      window.onload = () => {
         const urlSearchParams = new URLSearchParams(window.location.search);
         const params = Object.fromEntries(urlSearchParams.entries());
         const url = params.url
@@ -44,7 +44,7 @@
           .then((response) => response.text())
           .then(csvToArray)
           .then((data) => console.log(data));
-              })
+      }
     </script>
    </head>
   <body>
