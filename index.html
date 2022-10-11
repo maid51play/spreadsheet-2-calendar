@@ -1,7 +1,5 @@
 <html>
   <head>
-  </head>
-  <body>
     <script>
       window.onload(() => {
         const urlSearchParams = new URLSearchParams(window.location.search);
@@ -9,8 +7,47 @@
         const url = params.url
         console.log(params)
         console.log(url)
-      })
+        
+        const csv_regex = /(?:,|\n|^)("(?:(?:"")*[^"]*)*"|[^",\n]*|(?:\n|$))/g
+
+        const csvToArray = (data) => {
+            const rows = []
+            let currentRow = []
+            let isQuoted = false;
+            let lastComma = 0;
+
+            for(let i=0;i<data.length;i++) {
+              const char = data[i]      
+
+              if(char === '"') {
+                isQuoted = !isQuoted
+              } else if(!isQuoted) {
+                if(char === ',' || char === '\n') {
+                 let cell = data.slice(lastComma, i);
+                 if(cell[0] === '"' && cell[cell.length-1] === '"') {
+                   cell = cell.slice(1, cell.length-2)
+                   cell = cell.replaceAll('""', '"')
+                 }
+                 currentRow.push(cell);
+                 lastComma = i+1;
+                }
+                if(char === '\n') {
+                 rows.push(currentRow)
+                 currentRow = []
+                }
+              }
+            } 
+            return rows;
+        }
+
+        fetch(url)
+          .then((response) => response.text())
+          .then(csvToArray)
+          .then((data) => console.log(data));
+              })
     </script>
+   </head>
+  <body>
     test
   </body>
 </html>
