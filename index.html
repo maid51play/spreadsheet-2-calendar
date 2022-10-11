@@ -10,7 +10,7 @@
 
         const csv_regex = /(?:,|\n|^)("(?:(?:"")*[^"]*)*"|[^",\n]*|(?:\n|$))/g;
 
-        const csvToArray = (data) => {
+        const csvToRows = (data) => {
           const rows = [];
           let currentRow = [];
           let isQuoted = false;
@@ -40,14 +40,53 @@
           return rows;
         };
 
+//         const parseDate = (startsAtDate, startsAtTime, endsAtDate, endsAtTime) => {
+//           const start = new Date(Date.parse(`${startsAtDate} ${startsAtTime} PST`))
+//           const startYY = start.getFullYear()
+//           const startmm = `0${start.getMonth() + 1}`.slice(-2)
+//           const startdd = `0${start.getDate()}`.slice(-2)
+//           const startHH = `0${start.getHours()}`.slice(-2)
+//           const startMM = `0${start.getMinutes()}`.slice(-2)
+
+//           const end = new Date(Date.parse(`${endsAtDate} ${endsAtTime} PST`))
+//           const endYY = end.getFullYear()
+//           const endmm = `0${end.getMonth() + 1}`.slice(-2)
+//           const enddd = `0${end.getDate()}`.slice(-2)
+//           const endHH = `0${end.getHours()}`.slice(-2)
+//           const endMM = `0${end.getMinutes()}`.slice(-2)
+
+//           return `DTSTART;TZID=America/Los_Angeles:${startYY}${startmm}${startdd}T${startHH}${startMM}00
+// DTEND;TZID=America/Los_Angeles:${endYY}${endmm}${enddd}T${endHH}${endMM}00`
+//         }
+
+        const printRows = (rows) => {
+          console.log(rows);
+          for (row in rows) {
+            // starts_at_date = row[2];
+            // starts_at_time = row[3];
+            // ends_at_date = row[4] || row[2];
+            // ends_at_time = row[5];
+
+            // description = row[6]
+            
+
+            document.body.innerHTML += "hi"
+
+          }
+        };
+
         fetch(url)
           .then((response) => response.text())
-          .then(csvToArray)
-          .then((data) => console.log(data));
+          .then(csvTorows)
+          .then((rows) => {
+            rows.shift();
+            rows.shift();
+            rows.shift();
+            return rows;
+          })
+          .then(printRows);
       };
     </script>
   </head>
-  <body>
-    test
-  </body>
+  <body></body>
 </html>
