@@ -81,7 +81,7 @@ END:VEVENT
 
         fetch(url)
           .then((response) => response.text())
-          .then(csvTorows)
+          .then(csvToRows)
           .then((rows) => {
             rows.shift();
             rows.shift();
